@@ -17,6 +17,16 @@ public class Tactical extends Player {
     {
         super(name);
     }
+
+    public boolean isBoughtBefore() {
+        return boughtBefore;
+    }
+
+    public void setBoughtBefore(boolean boughtBefore) {
+        this.boughtBefore = boughtBefore;
+    }
+    
+    
     
     public String toString()
     {
