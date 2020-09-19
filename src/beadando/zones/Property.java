@@ -14,6 +14,7 @@ public class Property extends Zone {
     private boolean isSold = false;
     private boolean hasHouse = false;
     private Player owner = null;
+    
     public Property() {
         super(0);
     }
@@ -42,7 +43,19 @@ public class Property extends Zone {
     @Override
      public String toString()
     {
-        return "Property zone";
+        if(isSold && hasHouse)
+        {
+            return "bought area, and built house on field:" + this.getZoneID();
+        }
+        else if(isSold)
+        {
+            return "bought area, but no built house on field:" + this.getZoneID();
+        }
+        else
+        {
+            return "Property zone";
+        }
+        
     }
     
     

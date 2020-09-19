@@ -24,7 +24,7 @@ public class Player {
     public void step(int diceNumber,int fieldsize)
     {
         position+=diceNumber;
-        position = position%fieldsize;
+        position = position%(fieldsize);
     }
     
     public void buyArea (Property house)
@@ -37,6 +37,12 @@ public class Player {
     {
         house.setHasHouse();   
     }
+    
+    public String toStringWinner()
+            {
+                return "The winner is:" + name + " who has " + money + "cash and these properties: " +
+                        this.getHouseTour().toString();
+            }
     
     public int getMoney() {
         return money;

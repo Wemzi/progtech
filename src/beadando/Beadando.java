@@ -6,6 +6,7 @@
 package beadando;
 import beadando.mechanics.Gameworks;
 import beadando.players.*;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class Beadando {
     
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Strict("Zoltan"));
         players.add(new Tactical("Rudolf"));

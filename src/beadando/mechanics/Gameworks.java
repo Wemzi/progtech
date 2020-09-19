@@ -9,6 +9,7 @@ import beadando.players.*;
 import beadando.zones.*;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,14 +60,81 @@ public class Gameworks {
     {
         Random rand= new Random();
         int rollingDice;
-        int actualPlayer=0;
         while(players.size()>1)
         {
+            players.removeIf( x -> x.money < 0 );
+            for(Player actual : players)
+            {
+            int idx=players.indexOf(actual);
             rollingDice = (rand.nextInt(6)+1);
-            Player actual = players.get(actualPlayer);
             actual.step(rollingDice,field.size());
-            Zone factual = field.get(players.get(actualPlayer).position);
-            if(factual instanceof Property)
+            Zone factual = field.get(players.get(idx).position);
+            playRound(actual,factual);
+            }
+        }
+         System.out.println(players.get(0).toStringWinner());
+    }
+    
+    
+    
+    public void playMatchnoDice(String filename) throws FileNotFoundException
+    {
+        File input = new File(filename);
+        BufferedReader br = new BufferedReader(new FileReader(input));
+        int rollingDice;
+        while(players.size()>1 )
+        {
+            players.removeIf( x -> x.money < 0 );
+            for(Player actual : players)
+            {
+            try{
+            int idx=players.indexOf(actual);
+            rollingDice=Integer.parseInt(br.readLine());
+            actual.step(rollingDice,field.size());
+            Zone factual = field.get(players.get(idx).position);
+            playRound(actual,factual);
+            }
+            catch(IOException e)
+            {
+                System.out.println("no dice numbers found, game ending, unable to determine winner");
+                return;
+            } 
+            catch(NumberFormatException e)
+            {
+                System.out.println("no more dice numbers found, game ending, unable to determine winner");
+                return;
+            } 
+            }
+        }
+         System.out.println(players.get(0).toStringWinner());
+    }
+    
+    
+
+    public ArrayList<Zone> getField() {
+        return field;
+    }
+    
+    public ArrayList<Player> getPlayers()
+    {
+        return players;
+    }
+    
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append(players.toString());
+        for(int idx=0; idx<field.size();idx++)
+        {
+         sb.append(field.get(idx).toString());
+         sb.append(System.lineSeparator());
+        }
+        return sb.toString();
+    }
+
+    public void playRound(Player actual, Zone factual)
+    {
+        if(factual instanceof Property)
             {
                 if(actual instanceof Strict)
                 {
@@ -74,9 +142,9 @@ public class Gameworks {
                     {
                         actual.buyArea((Property)factual);
                         ((Strict) actual).money-=1000;
-                        System.out.println(actual + " bought house on field:" + actual.position);
+                        System.out.println(actual + " bought area on field:" + actual.position);
                     }
-                    else if(!((Property) factual).isHasHouse() && actual==((Property) factual).getOwner() &&  actual.getMoney() > 4000)
+                    else if(!((Property) factual).isHasHouse() && ((Property) factual).isIsSold() && actual==((Property) factual).getOwner() &&  actual.getMoney() > 4000)
                     {
                         actual.buyHouse((Property)factual);
                         actual.money-=4000;
@@ -88,7 +156,7 @@ public class Gameworks {
                         {
                             ((Strict) actual).money -= 500;
                             ((Property) factual).getOwner().money+=500;
-                            System.out.println(actual + " paid for house of someone else on field:" + actual.position);
+                            System.out.println(actual + " paid for area of someone else on field:" + actual.position);
                         
                         }
                         else
@@ -105,7 +173,7 @@ public class Gameworks {
                     {
                         actual.buyArea((Property)factual);
                         ((Careful) actual).money-=1000;
-                        System.out.println(actual + " bought house on field:" + actual.position);
+                        System.out.println(actual + " bought area on field:" + actual.position);
                     }
                     else if(!((Property) factual).isHasHouse() && actual==((Property) factual).getOwner() &&  actual.getMoney() > 8000)
                     {
@@ -120,7 +188,7 @@ public class Gameworks {
                         {
                             ((Careful) actual).money -= 500;
                             ((Property) factual).getOwner().money+=500;
-                             System.out.println(actual + " paid for house of someone else on field:" + actual.position);
+                             System.out.println(actual + " paid for area of someone else on field:" + actual.position);
                         }
                         else
                         {
@@ -138,7 +206,7 @@ public class Gameworks {
                         actual.buyArea((Property)factual);
                         ((Tactical) actual).setBoughtBefore(true);
                         ((Tactical) actual).money-=1000;
-                        System.out.println(actual + " bought house on field:" + actual.position);
+                        System.out.println(actual + " bought area on field:" + actual.position);
                     }
                     else if(!((Property) factual).isHasHouse() && actual==((Property) factual).getOwner() &&  actual.getMoney() > 4000 && !((Tactical) actual).isBoughtBefore() )
                     {
@@ -154,7 +222,7 @@ public class Gameworks {
                         {
                             ((Tactical) actual).money -= 500;
                             ((Property) factual).getOwner().money+=500;
-                             System.out.println(actual + " paid for house of someone else on field:" + actual.position);
+                             System.out.println(actual + " paid for area of someone else on field:" + actual.position);
                         }
                         else
                         {
@@ -183,37 +251,5 @@ public class Gameworks {
                 actual.money-=factual.getCost();
                 System.out.println(actual + " got unlucky on field:" + actual.position);
             }
-            if(actual.getMoney()<0)
-            {
-                System.out.println(actual + "got kicked out of the game HAHAHAHAHA");
-                players.remove(actualPlayer);
-            }
-            actualPlayer++;
-            actualPlayer=actualPlayer%(players.size());
-            }
-         System.out.println(players.get(0).toString());
     }
-    
-
-    public ArrayList<Zone> getField() {
-        return field;
-    }
-    
-    public ArrayList<Player> getPlayers()
-    {
-        return players;
-    }
-    
-    public String toString()
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.append(players.toString());
-        for(int idx=0; idx<field.size();idx++)
-        {
-         sb.append(field.get(idx).toString());
-         sb.append(System.lineSeparator());
-        }
-        return sb.toString();
-    }
-    
 }
