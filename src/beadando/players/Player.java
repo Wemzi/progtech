@@ -21,9 +21,10 @@ public class Player {
         this.name=name;
     }
     
-    public void step(int diceNumber)
+    public void step(int diceNumber,int fieldsize)
     {
         position+=diceNumber;
+        position = position%fieldsize;
     }
     
     public void buyArea (Property house)

@@ -20,12 +20,12 @@ public class Beadando {
         players.add(new Strict("Zoltan"));
         players.add(new Tactical("Rudolf"));
         players.add(new Careful("David"));
+        players.add(new Strict("Joska"));
+        players.add(new Tactical("Koppany"));
+        players.add(new Careful("Richard"));
         Gameworks match = new Gameworks("zones.txt",players);
         System.out.println(match.toString());
-        for(int idx=0; idx<100; idx++)
-        {
         match.playMatch();
-        }
     }
     
 }

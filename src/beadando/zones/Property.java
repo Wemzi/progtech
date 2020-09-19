@@ -31,6 +31,10 @@ public class Property extends Zone {
         owner = buyer;
     }
 
+    public Player getOwner() {
+        return owner;
+    }
+
     public void setHasHouse() {
         this.hasHouse = true;
     }
