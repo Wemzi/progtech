@@ -15,4 +15,10 @@ public class Lucky extends Zone {
         super(cost);
     }
     
+    @Override
+     public String toString()
+    {
+        return "Lucky zone, reward: " + this.cost;
+    }
+    
 }

@@ -11,10 +11,14 @@ package beadando.players;
  */
 public class Careful extends Player {
 
-    public Careful() {
-        super();
+    public Careful(String name) {
+        super(name);
     }
 
+        public String toString()
+    {
+        return name + " strategy: Careful, money: " + money; 
+    }
    
     
 }

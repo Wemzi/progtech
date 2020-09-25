@@ -17,4 +17,10 @@ public class Service extends Zone {
         super(cost);
     }
     
+    @Override
+    public String toString()
+    {
+        return "Service zone, cost: " + this.cost;
+    }
+    
 }

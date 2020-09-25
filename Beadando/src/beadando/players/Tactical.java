@@ -11,4 +11,26 @@ package beadando.players;
  */
 public class Tactical extends Player {
     
+    private boolean boughtBefore=false;
+    
+    public Tactical(String name)
+    {
+        super(name);
+    }
+
+    public boolean isBoughtBefore() {
+        return boughtBefore;
+    }
+
+    public void setBoughtBefore(boolean boughtBefore) {
+        this.boughtBefore = boughtBefore;
+    }
+    
+    
+    
+    public String toString()
+    {
+        return name + " strategy: Tactical, money: " + money; 
+    }
+    
 }

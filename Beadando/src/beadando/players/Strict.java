@@ -11,8 +11,13 @@ package beadando.players;
  */
 public class Strict extends Player {
 
-    public Strict() {
+    public Strict(String name) {
+        super(name);
     }
     
+       public String toString()
+    {
+        return name + " strategy: Strict, money: " + money; 
+    }
     
 }

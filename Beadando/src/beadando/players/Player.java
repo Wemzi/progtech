@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package beadando.players;
-import beadando.zones.realEstate;
+import beadando.zones.Property;
 import java.util.ArrayList;
 
 /**
@@ -12,14 +12,36 @@ import java.util.ArrayList;
  * @author lkcsd
  */
 public class Player {
-    private int money=10000;
-    private ArrayList<realEstate> houseTour = new ArrayList<>();
+    public int money=10000;
+    public ArrayList<Property> houseTour = new ArrayList<>();
+    public String name;
+    public int position=0;
+    public Player(String name)
+    {
+        this.name=name;
+    }
+    
+    public void step(int diceNumber)
+    {
+        position+=diceNumber;
+    }
+    
+    public void buyArea (Property house)
+    {
+        houseTour.add(house);
+        house.sellHouse(this);
+    }
+    
+    public void buyHouse (Property house)
+    {
+        house.setHasHouse();   
+    }
     
     public int getMoney() {
         return money;
     }
 
-    public ArrayList<realEstate> getHouseTour() {
+    public ArrayList<Property> getHouseTour() {
         return houseTour;
     }
     

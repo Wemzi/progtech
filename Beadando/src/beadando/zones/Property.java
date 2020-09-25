@@ -10,10 +10,11 @@ import beadando.players.Player;
  *
  * @author lkcsd
  */
-public class realEstate extends Zone {
+public class Property extends Zone {
     private boolean isSold = false;
     private boolean hasHouse = false;
-    public realEstate() {
+    private Player owner = null;
+    public Property() {
         super(0);
     }
 
@@ -25,15 +26,20 @@ public class realEstate extends Zone {
         return hasHouse;
     }
 
-    public void sellHouse() {
+    public void sellHouse(Player buyer) {
         this.isSold = true;
-        
+        owner = buyer;
     }
 
     public void setHasHouse() {
         this.hasHouse = true;
     }
     
+    @Override
+     public String toString()
+    {
+        return "Property zone";
+    }
     
     
 }
