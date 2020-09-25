@@ -6,7 +6,7 @@ package beadando.zones;
  */
 public class Zone {
     protected int cost;
-    public static int zoneID;
+    public int zoneID;
     public static int zoneNumber = 0;
 
     public Zone(int cost) {
@@ -14,7 +14,7 @@ public class Zone {
         zoneID=zoneNumber++;
     }
 
-    public static int getZoneID() {
+    public int getZoneID() {
         return zoneID;
     }
     
