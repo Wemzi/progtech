@@ -24,7 +24,7 @@ public class Gameworks {
     public ArrayList<Zone> field;
     public ArrayList<Player> players;
     
-    /** A pályageneráló metódus, amin később meccseket lehet játszani. */
+    /** A pályageneráló metódus, amin később meccseket lehet játszani. Tulajdonképpen egy fájlbeolvasás. */
     public Gameworks(String filename, ArrayList<Player> players)
     {
         this.players=players;
@@ -59,7 +59,8 @@ public class Gameworks {
     }
     
     
-    /** Egy olyan meccset játszik le, ahol a dobókocka számai véletlenszerűek. */
+    /** Egy olyan meccset játszik le, ahol a dobókocka számai véletlenszerűek. 
+     * ForEach ciklussal megyünk végig a játékosokon körönként, amely ciklust addig iteráljuk, míg csak egy ember marad a gyűjteményben.*/
     public void playMatch()
     {
         Random rand= new Random();
@@ -80,8 +81,9 @@ public class Gameworks {
     }
     
     
-    
-    public void playMatchnoDice(String filename) throws FileNotFoundException
+    /**ez a metódus szolgál arra, hogy a szövegfájlból beolvasott számoknak megfelelően történjenek a mezőlépések.
+     * Tulajdonképpen ugyanaz, mint a playMatch, csak Random osztály használata nélkül. */
+    public int playMatchnoDice(String filename) throws FileNotFoundException
     {
         File input = new File(filename);
         BufferedReader br = new BufferedReader(new FileReader(input));
@@ -101,16 +103,17 @@ public class Gameworks {
             catch(IOException e)
             {
                 System.out.println("no dice numbers found, game ending, unable to determine winner");
-                return;
+                return 1;
             } 
             catch(NumberFormatException e)
             {
                 System.out.println("no more dice numbers found, game ending, unable to determine winner");
-                return;
+                return 2;
             } 
             }
         }
          System.out.println(players.get(0).toStringWinner());
+         return 0;
     }
     
     
@@ -124,6 +127,8 @@ public class Gameworks {
         return players;
     }
     
+    
+    /** StringBuilder használatával kiiratjuk az összes mezőt, amelyet létrehoztunk, tehát tkp a pályát. */
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
@@ -136,6 +141,8 @@ public class Gameworks {
         return sb.toString();
     }
 
+    
+    /** a játék veleje,itt van a fő szabályzat, a pénzmozgás, a stratégiák működésének leprogramozása, a házterület megvétele, a házépítés, majd akár más játékos által történő rálépés is. */
     public void playRound(Player actual, Zone factual)
     {
         if(factual instanceof Property)
@@ -146,13 +153,13 @@ public class Gameworks {
                     {
                         actual.buyArea((Property)factual);
                         ((Strict) actual).money-=1000;
-                        System.out.println(actual + " bought area on field:" + actual.position);
+                        //System.out.println(actual + " bought area on field:" + actual.position);
                     }
                     else if(!((Property) factual).isHasHouse() && ((Property) factual).isIsSold() && actual==((Property) factual).getOwner() &&  actual.getMoney() > 4000)
                     {
                         actual.buyHouse((Property)factual);
                         actual.money-=4000;
-                        System.out.println(actual + " bought house on field:" + actual.position );
+                        //System.out.println(actual + " bought house on field:" + actual.position );
                     }
                     else if(((Property) factual).isIsSold())
                     {
@@ -160,14 +167,14 @@ public class Gameworks {
                         {
                             ((Strict) actual).money -= 500;
                             ((Property) factual).getOwner().money+=500;
-                            System.out.println(actual + " paid for area of someone else on field:" + actual.position);
+                            //System.out.println(actual + " paid for area of someone else on field:" + actual.position);
                         
                         }
                         else
                         {
                             ((Strict) actual).money -= 2000;
                                 ((Property) factual).getOwner().money+=2000;
-                                System.out.println(actual + " paid for house of someone else on field:" + actual.position);
+                                //System.out.println(actual + " paid for house of someone else on field:" + actual.position);
                         }
                     }
                 }
@@ -177,13 +184,13 @@ public class Gameworks {
                     {
                         actual.buyArea((Property)factual);
                         ((Careful) actual).money-=1000;
-                        System.out.println(actual + " bought area on field:" + actual.position);
+                        //System.out.println(actual + " bought area on field:" + actual.position);
                     }
                     else if(!((Property) factual).isHasHouse() && actual==((Property) factual).getOwner() &&  actual.getMoney() > 8000)
                     {
                         actual.buyHouse((Property)factual);
                         ((Careful) actual).money-=4000;
-                        System.out.println(actual + " bought house on field:" + actual.position);
+                        //System.out.println(actual + " bought house on field:" + actual.position);
                         
                     }
                     else if(((Property) factual).isIsSold())
@@ -192,13 +199,13 @@ public class Gameworks {
                         {
                             ((Careful) actual).money -= 500;
                             ((Property) factual).getOwner().money+=500;
-                             System.out.println(actual + " paid for area of someone else on field:" + actual.position);
+                             //System.out.println(actual + " paid for area of someone else on field:" + actual.position);
                         }
                         else
                         {
                             ((Careful) actual).money -= 2000;
                             ((Property) factual).getOwner().money+=2000;
-                             System.out.println(actual + " paid for house of someone else on field: " + actual.position);
+                             //System.out.println(actual + " paid for house of someone else on field: " + actual.position);
                         }
                     
                    }   
@@ -210,14 +217,14 @@ public class Gameworks {
                         actual.buyArea((Property)factual);
                         ((Tactical) actual).setBoughtBefore(true);
                         ((Tactical) actual).money-=1000;
-                        System.out.println(actual + " bought area on field:" + actual.position);
+                        //System.out.println(actual + " bought area on field:" + actual.position);
                     }
                     else if(!((Property) factual).isHasHouse() && actual==((Property) factual).getOwner() &&  actual.getMoney() > 4000 && !((Tactical) actual).isBoughtBefore() )
                     {
                         actual.buyHouse((Property)factual);
                         ((Tactical) actual).setBoughtBefore(true);
                         ((Tactical) actual).money-=4000;
-                        System.out.println(actual + " bought house on field:" + actual.position);
+                        //System.out.println(actual + " bought house on field:" + actual.position);
                     }
                     else if(((Property) factual).isIsSold())
                     {
@@ -226,13 +233,13 @@ public class Gameworks {
                         {
                             ((Tactical) actual).money -= 500;
                             ((Property) factual).getOwner().money+=500;
-                             System.out.println(actual + " paid for area of someone else on field:" + actual.position);
+                             //System.out.println(actual + " paid for area of someone else on field:" + actual.position);
                         }
                         else
                         {
                             ((Tactical) actual).money -= 2000;
                             ((Property) factual).getOwner().money+=2000;
-                            System.out.println(actual + " paid for house of someone else on field:" + actual.position);
+                            //System.out.println(actual + " paid for house of someone else on field:" + actual.position);
                         }
                     }
                 }
@@ -244,7 +251,7 @@ public class Gameworks {
                     ((Tactical) actual).setBoughtBefore(false);
                 }
                 actual.money+=factual.getCost();
-                System.out.println(actual + " got lucky on field:" + actual.position);
+                //System.out.println(actual + " got lucky on field:" + actual.position);
             }
             else if(factual instanceof Service)
             {
@@ -253,7 +260,7 @@ public class Gameworks {
                     ((Tactical) actual).setBoughtBefore(false);
                 }
                 actual.money-=factual.getCost();
-                System.out.println(actual + " got unlucky on field:" + actual.position);
+                //System.out.println(actual + " got unlucky on field:" + actual.position);
             }
     }
 }

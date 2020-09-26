@@ -14,8 +14,8 @@ import java.util.ArrayList;
  * @author lkcsd
  */
 public class Beadando {
-    
-
+    /** a készítés során ezt a main programot használtam a játék tesztelésére, hogy lássam, minden úgy működik, ahogy én gondolom. Tulajdonképpen minden fontos metódust meghívok benne.
+     * Az unit tesztek megléte ellenére meghagyom, ha bármikor próbálgatni kellene rajta valamit. */
     public static void main(String[] args) throws FileNotFoundException {
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Strict("Zoltan"));
@@ -26,7 +26,7 @@ public class Beadando {
         players.add(new Careful("Richard"));
         Gameworks match = new Gameworks("zones.txt",players);
         System.out.println(match.toString());
-        match.playMatch();
+        match.playMatchnoDice("dice.txt");
     }
     
 }

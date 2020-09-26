@@ -21,23 +21,26 @@ public class Player {
         this.name=name;
     }
     
+    /** a léptetés metódusa, így vált mezőt a játékos, amelybe implementáltam a moduló osztás segítségével a pálya kerek jellegét is. */
     public void step(int diceNumber,int fieldsize)
     {
         position+=diceNumber;
         position = position%(fieldsize);
     }
     
+    /** terület vásárlás */
     public void buyArea (Property house)
     {
         houseTour.add(house);
         house.sellHouse(this);
     }
-    
+    /** házépítés */
     public void buyHouse (Property house)
     {
         house.setHasHouse();   
     }
     
+    /** az utolsó sora a program lefutásának, ahol kiiratjuk, ki a nyertes, és a tulajdonait.*/
     public String toStringWinner()
             {
                 return "The winner is:" + name + " who has " + money + "cash and these properties: " +

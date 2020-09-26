@@ -39,7 +39,7 @@ public class Property extends Zone {
     public void setHasHouse() {
         this.hasHouse = true;
     }
-    
+    /** A property toString-je kicsit rendhagyó, mert annak függvényében írok ki róla dolgokat, hogy van e tulajdonosa, illetve építettek-e rá házat.*/
     @Override
      public String toString()
     {
