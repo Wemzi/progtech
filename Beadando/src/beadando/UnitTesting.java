@@ -23,14 +23,7 @@ public class UnitTesting {
     @Test
     public void creatingGameworks()
     {
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(new Strict("Zoltan"));
-        players.add(new Tactical("Rudolf"));
-        players.add(new Careful("David"));
-        players.add(new Strict("Joska"));
-        players.add(new Tactical("Koppany"));
-        players.add(new Careful("Richard"));
-        Gameworks test1 = new Gameworks("zones.txt",players);
+        Gameworks test1 = new Gameworks("zones.txt","players.txt");
         assertEquals(test1.players.size(),6);
         assertEquals(test1.field.size(),15);
         
@@ -39,14 +32,7 @@ public class UnitTesting {
     @Test
      public void properEnd()
     {
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(new Strict("Zoltan"));
-        players.add(new Tactical("Rudolf"));
-        players.add(new Careful("David"));
-        players.add(new Strict("Joska"));
-        players.add(new Tactical("Koppany"));
-        players.add(new Careful("Richard"));
-        Gameworks test2 = new Gameworks("zones.txt",players);
+        Gameworks test2 = new Gameworks("zones.txt","players.txt");
         test2.playMatch();
         assertEquals(test2.players.size(),1);
         assertEquals(test2.field.size(),15);
@@ -55,14 +41,7 @@ public class UnitTesting {
     @Test
     public void noWinner() throws FileNotFoundException
     {
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(new Strict("Zoltan"));
-        players.add(new Tactical("Rudolf"));
-        players.add(new Careful("David"));
-        players.add(new Strict("Joska"));
-        players.add(new Tactical("Koppany"));
-        players.add(new Careful("Richard"));
-        Gameworks test3 = new Gameworks("zones.txt",players);
+        Gameworks test3 = new Gameworks("zones.txt","players.txt");
         assertEquals(test3.playMatchnoDice("dice.txt"),2);
     }
     
@@ -71,14 +50,8 @@ public class UnitTesting {
     @Test
     public void worksTheSameEveryTime() throws FileNotFoundException
     {
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(new Strict("Zoltan"));
-        players.add(new Tactical("Rudolf"));
-        players.add(new Careful("David"));
-        players.add(new Strict("Joska"));
-        players.add(new Tactical("Koppany"));
-        players.add(new Careful("Richard"));
-        Gameworks test4 = new Gameworks("zones.txt",players);
+
+        Gameworks test4 = new Gameworks("zones.txt","players.txt");
         assertEquals(test4.playMatchnoDice("dice2.txt"),0);
         assertEquals(test4.players.get(0).name,"Rudolf");
         assertEquals(test4.players.get(0).money,5650);
@@ -89,14 +62,7 @@ public class UnitTesting {
      @Test
     public void worksTheSameEveryTime2() throws FileNotFoundException
     {
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(new Strict("Zoltan"));
-        players.add(new Tactical("Rudolf"));
-        players.add(new Careful("David"));
-        players.add(new Strict("Joska"));
-        players.add(new Tactical("Koppany"));
-        players.add(new Careful("Richard"));
-        Gameworks test5 = new Gameworks("zones.txt",players);
+        Gameworks test5 = new Gameworks("zones.txt","players.txt");
         assertEquals(test5.playMatchnoDice("dice3.txt"),0);
         assertEquals(test5.players.get(0).name,"Richard");
         assertEquals(test5.players.get(0).money,2750);
@@ -107,25 +73,20 @@ public class UnitTesting {
      @Test(expected=FileNotFoundException.class)
     public void noDice() throws FileNotFoundException
     {
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(new Strict("Zoltan"));
-        players.add(new Tactical("Rudolf"));
-        players.add(new Careful("David"));
-        players.add(new Strict("Joska"));
-        players.add(new Tactical("Koppany"));
-        players.add(new Careful("Richard"));
-        Gameworks test6 = new Gameworks("zones.txt",players);
+        Gameworks test6 = new Gameworks("zones.txt","players.txt");
         assertEquals(test6.playMatchnoDice("dice4.txt"),2);
     }
         
-    public void creatingGameworks()
+    public void onePlayer()
     {
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Strict("Zoltan"));
-        Gameworks test1 = new Gameworks("zones.txt",players);
-        assertEquals(test1.players.size(),1);
-        assertEquals(test1.field.size(),15);
-        assertEquals(test1.field.size(),15);
+        Gameworks test7 = new Gameworks("zones.txt","oneplayer.txt");
+        assertEquals(test7.players.size(),1);
+        assertEquals(test7.field.size(),15);
+        test7.playMatch();
+        assertEquals(test7.players.get(0).money,10000);
+       
         
     }        
     

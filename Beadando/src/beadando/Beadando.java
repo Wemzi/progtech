@@ -24,9 +24,9 @@ public class Beadando {
         players.add(new Strict("Joska"));
         players.add(new Tactical("Koppany"));
         players.add(new Careful("Richard"));
-        Gameworks match = new Gameworks("zones.txt",players);
+        Gameworks match = new Gameworks("zones.txt","players.txt");
         System.out.println(match.toString());
-        match.playMatchnoDice("dice.txt");
+        match.playMatch();
     }
     
 }

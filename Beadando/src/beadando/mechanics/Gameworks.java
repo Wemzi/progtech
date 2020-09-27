@@ -25,9 +25,9 @@ public class Gameworks {
     public ArrayList<Player> players;
     
     /** A pályageneráló metódus, amin később meccseket lehet játszani. Tulajdonképpen egy fájlbeolvasás. */
-    public Gameworks(String filename, ArrayList<Player> players)
+    public Gameworks(String filename,String filename2)
     {
-        this.players=players;
+        players=new ArrayList<>();
         field = new ArrayList<>();
         File input = new File(filename);
         
@@ -41,7 +41,7 @@ public class Gameworks {
             data = line.split(" ");
             if(data[0].equals("P"))
             {
-             field.add(new Property());
+                field.add(new Property());
             }
             else if(data[0].equals("L"))
             {
@@ -50,6 +50,33 @@ public class Gameworks {
             else if(data[0].equals("S"))
             {
                 field.add(new Service(Integer.parseInt(data[1])));
+            }
+            else throw new IOException("File format error");
+            }
+        } catch (IOException e) {
+            System.out.println("IO error occured: " + e.getMessage());
+        }
+ 
+        File input2 = new File(filename2);
+        String[] data2;
+        try (BufferedReader bf = new BufferedReader(new FileReader(input2))) {
+            String line=null;
+            int lineNumber = Integer.parseInt(bf.readLine());
+            for(int idx=0; idx<lineNumber;idx++)
+            {
+                line=bf.readLine();
+            data = line.split(" ");
+            if(data[1].equals("S"))
+            {
+                players.add(new Strict(data[0]));
+            }
+            else if(data[1].equals("C"))
+            {
+                players.add(new Careful(data[0]));
+            }
+            else if(data[1].equals("T"))
+            {
+                players.add(new Tactical(data[0]));
             }
             else throw new IOException("File format error");
             }
