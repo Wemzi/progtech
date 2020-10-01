@@ -1,7 +1,7 @@
 
 package beadando.zones;
 /**
- *
+ * helo
  * @author lkcsd
  */
 public class Zone {

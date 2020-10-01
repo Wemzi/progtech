@@ -7,6 +7,7 @@ package beadando.mechanics;
 
 import beadando.players.*;
 import beadando.zones.*;
+import beadando.zones.Lucky;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -94,7 +95,7 @@ public class Gameworks {
         int rollingDice;
         while(players.size()>1)
         {
-            players.removeIf( x -> x.money < 0 );
+            players.removeIf( x -> x.getMoney() < 0 );
             for(Player actual : players)
             {
             int idx=players.indexOf(actual);
@@ -117,7 +118,7 @@ public class Gameworks {
         int rollingDice;
         while(players.size()>1 )
         {
-            players.removeIf( x -> x.money < 0 );
+            players.removeIf( x -> x.getMoney() < 0 );
             for(Player actual : players)
             {
             try{
@@ -173,111 +174,24 @@ public class Gameworks {
     public void playRound(Player actual, Zone factual)
     {
         if(factual instanceof Property)
-            {
-                if(actual instanceof Strict)
-                {
-                    if(!((Property) factual).isIsSold()  && actual.getMoney() > 1000 )
-                    {
-                        actual.buyArea((Property)factual);
-                        ((Strict) actual).money-=1000;
-                        //System.out.println(actual + " bought area on field:" + actual.position);
-                    }
-                    else if(!((Property) factual).isHasHouse() && ((Property) factual).isIsSold() && actual==((Property) factual).getOwner() &&  actual.getMoney() > 4000)
-                    {
-                        actual.buyHouse((Property)factual);
-                        actual.money-=4000;
-                        //System.out.println(actual + " bought house on field:" + actual.position );
-                    }
-                    else if(((Property) factual).isIsSold())
-                    {
-                        if(((Property) factual).isHasHouse())
-                        {
-                            ((Strict) actual).money -= 500;
-                            ((Property) factual).getOwner().money+=500;
-                            //System.out.println(actual + " paid for area of someone else on field:" + actual.position);
-                        
-                        }
-                        else
-                        {
-                            ((Strict) actual).money -= 2000;
-                                ((Property) factual).getOwner().money+=2000;
-                                //System.out.println(actual + " paid for house of someone else on field:" + actual.position);
-                        }
-                    }
-                }
-                if(actual instanceof Careful)
-                {
-                     if(!((Property) factual).isIsSold()  && actual.getMoney() > 2000  )
-                    {
-                        actual.buyArea((Property)factual);
-                        ((Careful) actual).money-=1000;
-                        //System.out.println(actual + " bought area on field:" + actual.position);
-                    }
-                    else if(!((Property) factual).isHasHouse() && actual==((Property) factual).getOwner() &&  actual.getMoney() > 8000)
-                    {
-                        actual.buyHouse((Property)factual);
-                        ((Careful) actual).money-=4000;
-                        //System.out.println(actual + " bought house on field:" + actual.position);
-                        
-                    }
-                    else if(((Property) factual).isIsSold())
-                    {
-                        if(((Property) factual).isHasHouse())
-                        {
-                            ((Careful) actual).money -= 500;
-                            ((Property) factual).getOwner().money+=500;
-                             //System.out.println(actual + " paid for area of someone else on field:" + actual.position);
-                        }
-                        else
-                        {
-                            ((Careful) actual).money -= 2000;
-                            ((Property) factual).getOwner().money+=2000;
-                             //System.out.println(actual + " paid for house of someone else on field: " + actual.position);
-                        }
-                    
-                   }   
-                }
-                if(actual instanceof Tactical)
-                {
-                    if(!((Property) factual).isIsSold()  && actual.getMoney() > 1000 && !((Tactical) actual).isBoughtBefore() )
-                    {
-                        actual.buyArea((Property)factual);
-                        ((Tactical) actual).setBoughtBefore(true);
-                        ((Tactical) actual).money-=1000;
-                        //System.out.println(actual + " bought area on field:" + actual.position);
-                    }
-                    else if(!((Property) factual).isHasHouse() && actual==((Property) factual).getOwner() &&  actual.getMoney() > 4000 && !((Tactical) actual).isBoughtBefore() )
-                    {
-                        actual.buyHouse((Property)factual);
-                        ((Tactical) actual).setBoughtBefore(true);
-                        ((Tactical) actual).money-=4000;
-                        //System.out.println(actual + " bought house on field:" + actual.position);
-                    }
-                    else if(((Property) factual).isIsSold())
-                    {
-                        ((Tactical) actual).setBoughtBefore(false);
-                        if(((Property) factual).isHasHouse())
-                        {
-                            ((Tactical) actual).money -= 500;
-                            ((Property) factual).getOwner().money+=500;
-                             //System.out.println(actual + " paid for area of someone else on field:" + actual.position);
-                        }
-                        else
-                        {
-                            ((Tactical) actual).money -= 2000;
-                            ((Property) factual).getOwner().money+=2000;
-                            //System.out.println(actual + " paid for house of someone else on field:" + actual.position);
-                        }
-                    }
-                }
-            }
+          if(!((Property)factual).isIsSold())
+          {
+              if(actual.canIBuy((Property)factual))
+              {
+                  actual.buyHouse((Property)factual);
+              }
+          }
+          else if(actual != ((Property) factual).getOwner())
+          {
+          actual.pay(factual.getCost(),((Property) factual).getOwner());
+          }
             else if (factual instanceof Lucky)
             {
                 if(actual instanceof Tactical)
                 {
                     ((Tactical) actual).setBoughtBefore(false);
                 }
-                actual.money+=factual.getCost();
+                actual.changeMoney(factual.getCost());
                 //System.out.println(actual + " got lucky on field:" + actual.position);
             }
             else if(factual instanceof Service)
@@ -286,8 +200,9 @@ public class Gameworks {
                 {
                     ((Tactical) actual).setBoughtBefore(false);
                 }
-                actual.money-=factual.getCost();
+                actual.changeMoney(-1*factual.getCost());
                 //System.out.println(actual + " got unlucky on field:" + actual.position);
             }
+            
     }
 }

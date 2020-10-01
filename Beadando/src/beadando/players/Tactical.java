@@ -5,6 +5,8 @@
  */
 package beadando.players;
 
+import beadando.zones.Property;
+
 /**
  *
  * @author lkcsd
@@ -26,11 +28,39 @@ public class Tactical extends Player {
         this.boughtBefore = boughtBefore;
     }
     
+    @Override
+    public boolean canIBuy(Property house)
+    {
+        if(house.isIsSold() && !house.isHasHouse())
+        {
+            return money >= house.getCost() && boughtBefore;
+        }
+        else
+        {
+            return money >= house.getCost() && boughtBefore;
+        }
+    }
     
+    @Override
+    public void buyHouse(Property house)
+    {
+         if(!house.isHasHouse())
+        {
+        houseTour.add(house);
+        house.sellHouse(this);
+        money-=1000;
+        }
+        else
+        {
+        house.setHasHouse();
+        money -= 4000;
+        }
+        boughtBefore=true;
+    }
     
     public String toString()
     {
-        return name + " strategy: Tactical, money: " + money; 
+        return name + " strategy: Tactical, money: " + this.getMoney(); 
     }
     
 }

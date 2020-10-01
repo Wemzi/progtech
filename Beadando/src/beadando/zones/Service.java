@@ -5,8 +5,6 @@
  */
 package beadando.zones;
 
-import beadando.zones.Zone;
-
 /**
  *
  * @author lkcsd

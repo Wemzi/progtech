@@ -5,6 +5,8 @@
  */
 package beadando.players;
 
+import beadando.zones.Property;
+
 /**
  *
  * @author lkcsd
@@ -15,9 +17,22 @@ public class Strict extends Player {
         super(name);
     }
     
+    @Override
+    public boolean canIBuy(Property house)
+    {
+     if(house.isIsSold() && !house.isHasHouse())
+    {
+        return money >= house.getCost();
+    }
+    else
+    {
+        return money >= house.getCost();
+    }
+    }
+    
        public String toString()
     {
-        return name + " strategy: Strict, money: " + money; 
+        return name + " strategy: Strict, money: " + this.getMoney();
     }
     
 }

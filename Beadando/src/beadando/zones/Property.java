@@ -16,7 +16,7 @@ public class Property extends Zone {
     private Player owner = null;
     
     public Property() {
-        super(0);
+        super(1000);
     }
 
     public boolean isIsSold() {
@@ -30,6 +30,7 @@ public class Property extends Zone {
     public void sellHouse(Player buyer) {
         this.isSold = true;
         owner = buyer;
+        this.cost = 4000;
     }
 
     public Player getOwner() {
@@ -39,6 +40,8 @@ public class Property extends Zone {
     public void setHasHouse() {
         this.hasHouse = true;
     }
+    
+    
     /** A property toString-je kicsit rendhagyó, mert annak függvényében írok ki róla dolgokat, hogy van e tulajdonosa, illetve építettek-e rá házat.*/
     @Override
      public String toString()

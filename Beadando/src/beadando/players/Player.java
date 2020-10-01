@@ -11,8 +11,8 @@ import java.util.ArrayList;
  *
  * @author lkcsd
  */
-public class Player {
-    public int money=10000;
+abstract public class Player {
+    protected int money=10000;
     public ArrayList<Property> houseTour = new ArrayList<>();
     public String name;
     public int position=0;
@@ -29,16 +29,21 @@ public class Player {
     }
     
     /** terület vásárlás */
-    public void buyArea (Property house)
-    {
-        houseTour.add(house);
-        house.sellHouse(this);
-    }
-    /** házépítés */
     public void buyHouse (Property house)
     {
-        house.setHasHouse();   
+        if(!house.isHasHouse())
+        {
+        houseTour.add(house);
+        house.sellHouse(this);
+        money-=1000;
+        }
+        else
+        {
+        house.setHasHouse();
+        money -= 4000;
+        }
     }
+    
     
     /** az utolsó sora a program lefutásának, ahol kiiratjuk, ki a nyertes, és a tulajdonait.*/
     public String toStringWinner()
@@ -49,6 +54,19 @@ public class Player {
     
     public int getMoney() {
         return money;
+    }
+    
+    public void changeMoney(int change)
+    {
+        money+=change;
+    }
+    
+    abstract public boolean canIBuy(Property house);
+    
+    public void pay(int amount,Player luckyone)
+    {
+        this.money-=amount;
+        luckyone.money+=amount;
     }
 
     public ArrayList<Property> getHouseTour() {

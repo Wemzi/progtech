@@ -3,13 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package beadando;
+
 
 import beadando.mechanics.Gameworks;
-import beadando.players.Careful;
 import beadando.players.Player;
 import beadando.players.Strict;
-import beadando.players.Tactical;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import org.junit.Test;
@@ -54,7 +52,7 @@ public class UnitTesting {
         Gameworks test4 = new Gameworks("zones.txt","players.txt");
         assertEquals(test4.playMatchnoDice("dice2.txt"),0);
         assertEquals(test4.players.get(0).name,"Rudolf");
-        assertEquals(test4.players.get(0).money,5650);
+        assertEquals(test4.players.get(0).getMoney(),5650);
         assertEquals(test4.players.get(0).getHouseTour().size(),2);
         
     }
@@ -65,7 +63,7 @@ public class UnitTesting {
         Gameworks test5 = new Gameworks("zones.txt","players.txt");
         assertEquals(test5.playMatchnoDice("dice3.txt"),0);
         assertEquals(test5.players.get(0).name,"Richard");
-        assertEquals(test5.players.get(0).money,2750);
+        assertEquals(test5.players.get(0).getMoney(),2750);
         assertEquals(test5.players.get(0).getHouseTour().size(),1);
         
     }
@@ -85,7 +83,7 @@ public class UnitTesting {
         assertEquals(test7.players.size(),1);
         assertEquals(test7.field.size(),15);
         test7.playMatch();
-        assertEquals(test7.players.get(0).money,10000);
+        assertEquals(test7.players.get(0).getMoney(),10000);
        
         
     }        

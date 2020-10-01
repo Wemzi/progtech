@@ -5,6 +5,8 @@
  */
 package beadando.players;
 
+import beadando.zones.Property;
+
 /**
  *
  * @author lkcsd
@@ -15,9 +17,22 @@ public class Careful extends Player {
         super(name);
     }
 
+    
+    @Override
+    public boolean canIBuy(Property house)
+    {
+    if(house.isIsSold() && !house.isHasHouse())
+    {
+        return money >= house.getCost() * 2;
+    }
+    else
+    {
+        return money >= house.getCost() * 2;
+    }
+    }
         public String toString()
     {
-        return name + " strategy: Careful, money: " + money; 
+        return name + " strategy: Careful (I'm only buying if i have twice as much money) money: " + this.getMoney(); 
     }
    
     
