@@ -33,34 +33,46 @@ public class Tactical extends Player {
     {
         if(house.isIsSold() && !house.isHasHouse())
         {
-            return money >= house.getCost() && boughtBefore;
+            return money >= house.getCost() && !boughtBefore;
         }
         else
         {
-            return money >= house.getCost() && boughtBefore;
+            return money >= house.getCost() && !boughtBefore;
         }
     }
     
     @Override
-    public void buyHouse(Property house)
+    public void houseZone(Property house)
     {
-         if(!house.isHasHouse())
-        {
-        houseTour.add(house);
-        house.sellHouse(this);
-        money-=1000;
-        }
-        else
-        {
-        house.setHasHouse();
-        money -= 4000;
-        }
-        boughtBefore=true;
+        if(!house.isIsSold())
+          {
+              if(this.canIBuy(house))
+              {
+                  if(!house.isHasHouse())
+                {
+                houseTour.add(house);
+                house.sellHouse(this);
+                money-=1000;
+                }
+                else
+                {
+                house.setHasHouse();
+                money -= 4000;
+                }
+                boughtBefore=true;
+               }
+          }
+          else if(this != house.getOwner())
+          {
+          this.pay(house.getCost(),house.getOwner());
+          boughtBefore=false;
+          }
+        
     }
     
     public String toString()
     {
-        return name + " strategy: Tactical, money: " + this.getMoney(); 
+        return name + " strategy: Tactical(I'm missing every second buying opportunity), money: " + this.getMoney(); 
     }
     
 }

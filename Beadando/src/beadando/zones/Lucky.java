@@ -5,6 +5,10 @@
  */
 package beadando.zones;
 // xd
+
+import beadando.players.Player;
+import beadando.players.Tactical;
+
 /**
  *
  * @author lkcsd
@@ -13,6 +17,16 @@ public class Lucky extends Zone {
 
     public Lucky(int cost) {
         super(cost);
+    }
+    
+    public void luckyZone(Player luckyone)
+    {
+        luckyone.changeMoney(this.getCost());
+        if(luckyone instanceof Tactical)
+        {
+            ((Tactical)luckyone).setBoughtBefore(false);
+            System.out.println("false");
+        }
     }
     
     @Override

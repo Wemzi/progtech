@@ -32,7 +32,7 @@ public class Careful extends Player {
     }
         public String toString()
     {
-        return name + " strategy: Careful (I'm only buying if i have twice as much money) money: " + this.getMoney(); 
+        return name + " strategy: Careful (I'm only buying if i have twice as much money) money: " + this.getMoney();
     }
    
     

@@ -30,9 +30,37 @@ public class Strict extends Player {
     }
     }
     
-       public String toString()
+    
+    @Override
+    public void houseZone(Property house)
     {
-        return name + " strategy: Strict, money: " + this.getMoney();
+        if(!house.isIsSold())
+          {
+              if(this.canIBuy(house))
+              {
+                  if(!house.isHasHouse())
+                {
+                houseTour.add(house);
+                house.sellHouse(this);
+                money-=1000;
+                }
+                else
+                {
+                house.setHasHouse();
+                money -= 4000;
+                }
+                
+               }
+          }
+          else if(this != house.getOwner())
+          {
+          this.pay(house.getCost(),house.getOwner());
+          }
+    }
+
+     public String toString()
+    {
+        return name + " strategy: Strict(I'm buying everything till I have money), money: " + this.getMoney();
     }
     
 }

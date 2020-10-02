@@ -105,7 +105,7 @@ public class Gameworks {
             playRound(actual,factual);
             }
         }
-         System.out.println(players.get(0).toStringWinner());
+         
     }
     
     
@@ -140,10 +140,14 @@ public class Gameworks {
             } 
             }
         }
-         System.out.println(players.get(0).toStringWinner());
+         
          return 0;
     }
     
+     public String toStringWinner()
+            {
+                return players.get(0).toStringWinner();
+            }
     
 
     public ArrayList<Zone> getField() {
@@ -170,38 +174,20 @@ public class Gameworks {
     }
 
     
-    /** a játék veleje,itt van a fő szabályzat, a pénzmozgás, a stratégiák működésének leprogramozása, a házterület megvétele, a házépítés, majd akár más játékos által történő rálépés is. */
+    /** a különböző mezők metódusait itt hívjuk meg. */
     public void playRound(Player actual, Zone factual)
     {
         if(factual instanceof Property)
-          if(!((Property)factual).isIsSold())
-          {
-              if(actual.canIBuy((Property)factual))
-              {
-                  actual.buyHouse((Property)factual);
-              }
-          }
-          else if(actual != ((Property) factual).getOwner())
-          {
-          actual.pay(factual.getCost(),((Property) factual).getOwner());
-          }
+        {
+            actual.houseZone((Property)factual);
+        }
             else if (factual instanceof Lucky)
             {
-                if(actual instanceof Tactical)
-                {
-                    ((Tactical) actual).setBoughtBefore(false);
-                }
-                actual.changeMoney(factual.getCost());
-                //System.out.println(actual + " got lucky on field:" + actual.position);
+                ((Lucky) factual).luckyZone(actual);
             }
             else if(factual instanceof Service)
             {
-                if(actual instanceof Tactical)
-                {
-                    ((Tactical) actual).setBoughtBefore(false);
-                }
-                actual.changeMoney(-1*factual.getCost());
-                //System.out.println(actual + " got unlucky on field:" + actual.position);
+                ((Service) factual).serviceZone(actual);
             }
             
     }

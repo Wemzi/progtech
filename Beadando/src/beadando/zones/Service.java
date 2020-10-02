@@ -5,6 +5,9 @@
  */
 package beadando.zones;
 
+import beadando.players.Player;
+import beadando.players.Tactical;
+
 /**
  *
  * @author lkcsd
@@ -13,6 +16,15 @@ public class Service extends Zone {
 
     public Service(int cost) {
         super(cost);
+    }
+    
+     public void serviceZone(Player notluckyone)
+    {
+        notluckyone.changeMoney(-1*this.getCost());
+        if(notluckyone instanceof Tactical)
+        {
+            ((Tactical) notluckyone).setBoughtBefore(false);
+        }
     }
     
     @Override

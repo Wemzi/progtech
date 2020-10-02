@@ -28,20 +28,26 @@ abstract public class Player {
         position = position%(fieldsize);
     }
     
-    /** terület vásárlás */
-    public void buyHouse (Property house)
+    public void houseZone(Property house)
     {
-        if(!house.isHasHouse())
-        {
-        houseTour.add(house);
-        house.sellHouse(this);
-        money-=1000;
-        }
-        else
-        {
-        house.setHasHouse();
-        money -= 4000;
-        }
+            if(!house.isIsSold() && this.canIBuy(house))
+            {
+                if(!house.isHasHouse())
+                {
+                houseTour.add(house);
+                house.sellHouse(this);
+                money-=1000;
+                }
+                else
+                {
+                house.setHasHouse();
+                money -= 4000;
+                }
+                }
+            else if(this != house.getOwner() && house.getOwner()!=null)
+            {
+            this.pay(house.getCost(),house.getOwner());
+            }
     }
     
     
