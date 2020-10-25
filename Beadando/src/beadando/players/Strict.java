@@ -41,15 +41,14 @@ public class Strict extends Player {
                   if(!house.isHasHouse())
                 {
                 houseTour.add(house);
+                money-=house.getCost();
                 house.sellHouse(this);
-                money-=1000;
                 }
                 else
                 {
+                money-=house.getCost();
                 house.setHasHouse();
-                money -= 4000;
                 }
-                
                }
           }
           else if(this != house.getOwner())

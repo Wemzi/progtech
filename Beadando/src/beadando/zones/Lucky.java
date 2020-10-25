@@ -25,7 +25,6 @@ public class Lucky extends Zone {
         if(luckyone instanceof Tactical)
         {
             ((Tactical)luckyone).setBoughtBefore(false);
-            System.out.println("false");
         }
     }
     

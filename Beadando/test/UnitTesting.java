@@ -52,7 +52,7 @@ public class UnitTesting {
         Gameworks test4 = new Gameworks("zones.txt","players.txt");
         assertEquals(test4.playMatchnoDice("dice2.txt"),0);
         assertEquals(test4.players.get(0).name,"Rudolf");
-        assertEquals(test4.players.get(0).getMoney(),5650);
+        assertEquals(test4.players.get(0).getMoney(),49100);
         assertEquals(test4.players.get(0).getHouseTour().size(),2);
         
     }
@@ -62,9 +62,9 @@ public class UnitTesting {
     {
         Gameworks test5 = new Gameworks("zones.txt","players.txt");
         assertEquals(test5.playMatchnoDice("dice3.txt"),0);
-        assertEquals(test5.players.get(0).name,"Richard");
-        assertEquals(test5.players.get(0).getMoney(),2750);
-        assertEquals(test5.players.get(0).getHouseTour().size(),1);
+        assertEquals(test5.players.get(0).name,"Koppany");
+        assertEquals(test5.players.get(0).getMoney(),29950);
+        assertEquals(test5.players.get(0).getHouseTour().size(),2);
         
     }
     
