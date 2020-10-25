@@ -6,7 +6,6 @@
 package amoba;
 
 import java.util.ArrayList;
-import javax.swing.JButton;
 
 
 /**
@@ -14,11 +13,10 @@ import javax.swing.JButton;
  * @author lkcsd
  */
 public class Player {
-    private ArrayList<JButton> ownButtons = new ArrayList<>();
-    private boolean isWinner = false;
+    private ArrayList<XOButton> ownButtons = new ArrayList<>();
     private static boolean isXturn = true;
     
-    public ArrayList<JButton> getownButtons()
+    public ArrayList<XOButton> getownButtons()
     {
         return ownButtons;
     }

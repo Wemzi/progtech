@@ -6,6 +6,7 @@
 package amoba;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -24,15 +25,15 @@ public class AmobaGUI {
     private JFrame frame;
     private JTextArea display;
     private JPanel mainPanel;
-    private JPanel selectorPanel;
-    private ArrayList<JButton> Buttons = new ArrayList<>();
+    private JPanel secondaryPanel;
+    private ArrayList<XOButton> Buttons = new ArrayList<>();
     
     public AmobaGUI()
     {
         frame = new JFrame("Amoba");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainPanel = new JPanel();
-        selectorPanel= new JPanel();
+        secondaryPanel= new JPanel();
         display = new JTextArea("Please select a field size", 25, 40);
         ArrayList<String> ButtonLabels = new ArrayList<>();
         ButtonLabels.add("6 x 6 ");
@@ -43,18 +44,15 @@ public class AmobaGUI {
             JButton quickButton = new JButton();
             quickButton.setLabel(tmp);
             quickButton.addActionListener(new SizeSelectActionListener(Integer.parseInt(tmp.split(" ")[0])));
-            Buttons.add(quickButton);
+            secondaryPanel.add(quickButton);
         }
-        for ( JButton tmp : Buttons)
-        {
-            selectorPanel.add(tmp);
-        }
+
   
         display.setLineWrap(true);
         display.setEditable(false);
         mainPanel.add(display);
         frame.getContentPane().add(mainPanel, BorderLayout.NORTH);
-        frame.getContentPane().add(selectorPanel,BorderLayout.SOUTH);
+        frame.getContentPane().add(secondaryPanel,BorderLayout.SOUTH);
         frame.pack();
         frame.setVisible(true);
         
@@ -69,20 +67,29 @@ public class AmobaGUI {
         public void actionPerformed (ActionEvent e)
         {
            mainPanel.remove(display);
-           frame.remove(selectorPanel);
+           frame.remove(secondaryPanel);
            frame.remove(mainPanel);
+           secondaryPanel=new JPanel();
+           display.setText("");
+           display.setSize(120, 20);
+           secondaryPanel.add(display);
+           secondaryPanel.setPreferredSize(new Dimension(50,20));
            mainPanel.setLayout(new GridLayout(size,size));
            frame.setSize(1000,1000);
-           Font defaultFontType = new Font(Buttons.get(0).getFont().getName(),Buttons.get(0).getFont().getStyle(),50);
-           Buttons = new ArrayList<JButton>();
-           for(int idx=0; idx<size*size; idx++)
+           Font defaultFontType = new Font(new JButton().getFont().getName(),new JButton().getFont().getStyle(),50);
+           for(int idx=0; idx<size; idx++)
            {
-              JButton tmp=new JButton();
-              tmp.setFont(defaultFontType);
-              tmp.addActionListener(new XOActionListener(tmp));
-             tmp.setSize(1000, 1000);
-              mainPanel.add(tmp);
+               for(int jdx=0; jdx<size; jdx++)
+               {
+                    XOButton tmp = new XOButton(idx, jdx);
+                    tmp.setFont(defaultFontType);
+                    tmp.addActionListener(new XOActionListener(tmp));
+                    tmp.setSize(1000, 1000);
+                    Buttons.add(tmp);
+                    mainPanel.add(tmp);
+               }
            }
+           frame.getContentPane().add(secondaryPanel, BorderLayout.NORTH);
            frame.add(mainPanel);
            
         }
@@ -96,19 +103,27 @@ public class AmobaGUI {
     
     class XOActionListener implements ActionListener
     {
-        private JButton thisButton;
+        private XOButton thisButton;
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            if(Player.isXTurn())
-            thisButton.setLabel("X");
-            else
+            if(thisButton.getLabel()=="")
             {
-                thisButton.setLabel("O");
+                if(Player.isXTurn())
+                {
+                    thisButton.setLabel("X");
+                    display.setText("Its Player O's turn");
+                }
+                else
+                {
+                    thisButton.setLabel("O");
+                    display.setText("Its Player X's turn");
+                }
             }
+            else return;
         }
     
-        public XOActionListener(JButton Button)
+        public XOActionListener(XOButton Button)
         {
             super();
             thisButton=Button;
@@ -127,11 +142,7 @@ public class AmobaGUI {
         return mainPanel;
     }
 
-    public ArrayList<JButton> getButtons() {
+    public ArrayList<XOButton> getButtons() {
         return Buttons;
     }
-    
-    
-    
-    
 }

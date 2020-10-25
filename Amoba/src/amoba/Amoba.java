@@ -5,22 +5,65 @@
  */
 package amoba;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author lkcsd
  */
 public class Amoba {
-    private Player playerX = new Player();
-    private Player playerY = new Player();
+    private static Player playerX = new Player();
+    private static Player playerO = new Player();
     public static AmobaGUI window;
+    public static int areasInARow=0;
     
-
+    public static Player determineWinner()
+    {
+        ArrayList<XOButton> fieldButtons = window.getButtons();
+        for(int idx=0; idx<fieldButtons.size();idx++)
+                {
+                    if(!fieldButtons.get(idx).getLabel().equals(""))
+                    {
+                        if(fieldButtons.get(idx).getLabel().equals("X"))
+                        {
+                            ++areasInARow;
+                            System.out.println(areasInARow);
+                        }
+                        else
+                        {
+                            --areasInARow;
+                            System.out.println(areasInARow);
+                        }
+                        if(areasInARow==5)
+                        {
+                                System.out.println("GG");
+                                return playerX;                         
+                        }
+                        else if(areasInARow==-5)
+                        {
+                            System.out.println("GGO");
+                                return playerO;
+                        }
+                    }
+                    else
+                    {
+                        System.out.println(0);
+                        areasInARow=0;
+                    }      
+                }
+        return null;
+    }
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
         window = new AmobaGUI();
+        while(true)
+        {
+            determineWinner();
+        }
     }
     
 }
