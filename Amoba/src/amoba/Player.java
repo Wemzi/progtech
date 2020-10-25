@@ -16,15 +16,17 @@ import javax.swing.JButton;
 public class Player {
     private ArrayList<JButton> ownButtons = new ArrayList<>();
     private boolean isWinner = false;
+    private static boolean isXturn = true;
     
-    
-    public boolean determineWinner()
+    public ArrayList<JButton> getownButtons()
     {
-        if(ownButtons.size()<5)
-        {
-            return false;
-        }
-        
+        return ownButtons;
+    }
+    
+    public static boolean isXTurn()
+    {
+        isXturn = !isXturn;
+        return !isXturn;
     }
     
 }

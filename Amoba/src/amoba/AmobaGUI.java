@@ -100,7 +100,12 @@ public class AmobaGUI {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            if(Player.isXTurn())
             thisButton.setLabel("X");
+            else
+            {
+                thisButton.setLabel("O");
+            }
         }
     
         public XOActionListener(JButton Button)
@@ -109,5 +114,24 @@ public class AmobaGUI {
             thisButton=Button;
         }
     }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public JTextArea getDisplay() {
+        return display;
+    }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
+    public ArrayList<JButton> getButtons() {
+        return Buttons;
+    }
+    
+    
+    
     
 }

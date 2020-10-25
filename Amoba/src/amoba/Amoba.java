@@ -10,15 +10,17 @@ package amoba;
  * @author lkcsd
  */
 public class Amoba {
-    
+    private Player playerX = new Player();
+    private Player playerY = new Player();
+    public static AmobaGUI window;
     
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        AmobaGUI game = new AmobaGUI();
         
+        window = new AmobaGUI();
     }
     
 }
