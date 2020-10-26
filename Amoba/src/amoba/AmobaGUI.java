@@ -21,12 +21,13 @@ import javax.swing.JTextArea;
  * @author lkcsd
  */
 public class AmobaGUI {
-    private ArrayList<JButton> buttons;
-    private JFrame frame;
-    private JTextArea display;
-    private JPanel mainPanel;
-    private JPanel secondaryPanel;
-    private ArrayList<XOButton> Buttons = new ArrayList<>();
+    private final JFrame frame;
+    private final JTextArea display;
+    private final JPanel mainPanel;
+    private  JPanel secondaryPanel;
+    private final ArrayList<XOButton> Buttons = new ArrayList<>();
+    private final Player playerX = new Player();
+    private final Player playerO = new Player();
     
     public AmobaGUI()
     {
@@ -61,7 +62,7 @@ public class AmobaGUI {
     
     class SizeSelectActionListener implements ActionListener 
     {
-        private int size;
+        private final int size;
         
         @Override
         public void actionPerformed (ActionEvent e)
@@ -76,7 +77,7 @@ public class AmobaGUI {
            secondaryPanel.setPreferredSize(new Dimension(50,20));
            mainPanel.setLayout(new GridLayout(size,size));
            frame.setSize(1000,1000);
-           Font defaultFontType = new Font(new JButton().getFont().getName(),new JButton().getFont().getStyle(),50);
+           Font defaultFontType = new Font(new JButton().getFont().getName(),new JButton().getFont().getStyle(),45);
            for(int idx=0; idx<size; idx++)
            {
                for(int jdx=0; jdx<size; jdx++)
@@ -107,17 +108,22 @@ public class AmobaGUI {
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            if(thisButton.getLabel()=="")
+            if(thisButton.getLabel().equals(""))
             {
                 if(Player.isXTurn())
                 {
                     thisButton.setLabel("X");
+                    playerX.addButton(thisButton);
                     display.setText("Its Player O's turn");
+                    Amoba.determineWinner();
+                    
                 }
                 else
                 {
                     thisButton.setLabel("O");
+                    playerO.addButton(thisButton);
                     display.setText("Its Player X's turn");
+                    Amoba.determineWinner();
                 }
             }
             else return;
@@ -145,4 +151,14 @@ public class AmobaGUI {
     public ArrayList<XOButton> getButtons() {
         return Buttons;
     }
+
+    public Player getPlayerX() {
+        return playerX;
+    }
+
+    public Player getPlayerO() {
+        return playerO;
+    }
+    
+    
 }
