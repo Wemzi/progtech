@@ -19,38 +19,82 @@ public class Amoba {
     
     public static Player determineWinner()
     {
+        areasInARow=0;
         ArrayList<XOButton> fieldButtons = window.getButtons();
+        
+        // sor check
         for(int idx=0; idx<fieldButtons.size();idx++)
+        {
+            if(idx%Math.sqrt(fieldButtons.size())==0)
+            {
+                areasInARow=0;
+            }
+            if(!(fieldButtons.get(idx).getLabel().equals("")))
+            {
+                if(fieldButtons.get(idx).getLabel().equals("X"))
                 {
-                    if(!fieldButtons.get(idx).getLabel().equals(""))
+                    ++areasInARow;
+                    //System.out.println(areasInARow);
+                }
+                else
+                {
+                    --areasInARow;
+                    //System.out.println(areasInARow);
+                }
+                if(areasInARow==5)
+                {
+                        System.out.println("GG");
+                        return playerX;                         
+                }
+                else if(areasInARow==-5)
+                {
+                    System.out.println("GGO");
+                        return playerO;
+                }
+            }
+            else
+            {
+                //System.out.println(0);
+                areasInARow=0;
+            }      
+        }
+        
+        // oszlop check
+        for(int jdx=0;jdx<Math.sqrt(fieldButtons.size()); jdx++)
+        {
+            areasInARow=0;
+            for(int idx=jdx; idx<fieldButtons.size();idx+=Math.sqrt(fieldButtons.size()))
+            {
+                
+                if(!(fieldButtons.get(idx).getLabel().equals("")))
+                {
+                    if(fieldButtons.get(idx).getLabel().equals("X"))
                     {
-                        if(fieldButtons.get(idx).getLabel().equals("X"))
-                        {
-                            ++areasInARow;
-                            System.out.println(areasInARow);
-                        }
-                        else
-                        {
-                            --areasInARow;
-                            System.out.println(areasInARow);
-                        }
-                        if(areasInARow==5)
-                        {
-                                System.out.println("GG");
-                                return playerX;                         
-                        }
-                        else if(areasInARow==-5)
-                        {
-                            System.out.println("GGO");
-                                return playerO;
-                        }
+                        ++areasInARow;
+                        //System.out.println(areasInARow);
                     }
                     else
                     {
-                        System.out.println(0);
+                        --areasInARow;
+                        //System.out.println(areasInARow);
+                    }
+                    if(areasInARow==5)
+                    {
+                            System.out.println("GG");
+                            return playerX;                         
+                    }
+                    else if(areasInARow==-5)
+                    {
+                        System.out.println("GGO");
+                            return playerO;
+                    }
+                    }
+                    else
+                    {
                         areasInARow=0;
                     }      
-                }
+            }
+        }
         return null;
     }
     
@@ -60,10 +104,11 @@ public class Amoba {
     public static void main(String[] args) {
         
         window = new AmobaGUI();
-        while(true)
+        while(determineWinner()==null)
         {
-            determineWinner();
+            System.out.println("no winner");
         }
+        return;
     }
     
 }
