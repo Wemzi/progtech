@@ -14,6 +14,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 /**
@@ -23,15 +26,38 @@ import javax.swing.JTextArea;
 public class AmobaGUI {
     private final JFrame frame;
     private final JTextArea display;
-    private final JPanel mainPanel;
+    private JPanel mainPanel;
     private  JPanel secondaryPanel;
     private final ArrayList<XOButton> Buttons = new ArrayList<>();
-    private final Player playerX = new Player();
-    private final Player playerO = new Player();
+    private Player playerX;
+    private Player playerO;
+    private final JMenuBar menubar = new JMenuBar();
+    private final JMenu menu = new JMenu("Game"); 
+    private final JMenuItem newgamebutton = new JMenuItem("New Game");
+    private Amoba engine;
     
-    public AmobaGUI()
+    public AmobaGUI(Amoba engine) 
     {
+        playerO = new Player("playerO");
+        playerX = new Player("playerX");
+        this.engine = engine;
         frame = new JFrame("Amoba");
+        menubar.add(menu);
+        newgamebutton.addActionListener(new ActionListener()
+        {@Override
+        public void actionPerformed (ActionEvent e) 
+        {
+            try{
+            engine.restartGame();
+            }
+            catch(InterruptedException f)
+            {
+                System.out.println(f.getMessage());
+            }
+        }
+        });
+        menu.add(newgamebutton);
+        frame.add(menubar,BorderLayout.NORTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainPanel = new JPanel();
         secondaryPanel= new JPanel();
@@ -43,7 +69,7 @@ public class AmobaGUI {
         for ( String tmp : ButtonLabels)
         {
             JButton quickButton = new JButton();
-            quickButton.setLabel(tmp);
+            quickButton.setText(tmp);
             quickButton.addActionListener(new SizeSelectActionListener(Integer.parseInt(tmp.split(" ")[0])));
             secondaryPanel.add(quickButton);
         }
@@ -52,10 +78,11 @@ public class AmobaGUI {
         display.setLineWrap(true);
         display.setEditable(false);
         mainPanel.add(display);
-        frame.getContentPane().add(mainPanel, BorderLayout.NORTH);
+        frame.getContentPane().add(mainPanel);
         frame.getContentPane().add(secondaryPanel,BorderLayout.SOUTH);
         frame.pack();
         frame.setVisible(true);
+        System.out.println("0");
         
         
     }
@@ -71,7 +98,7 @@ public class AmobaGUI {
            frame.remove(secondaryPanel);
            frame.remove(mainPanel);
            secondaryPanel=new JPanel();
-           display.setText("");
+           display.setText("It's X's turn");
            display.setSize(120, 20);
            secondaryPanel.add(display);
            secondaryPanel.setPreferredSize(new Dimension(50,20));
@@ -95,6 +122,8 @@ public class AmobaGUI {
            
         }
         
+        
+        
         public SizeSelectActionListener(int size)
                 {
                     super();
@@ -108,22 +137,42 @@ public class AmobaGUI {
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            if(thisButton.getLabel().equals(""))
+            if(thisButton.getText().equals(""))
             {
                 if(Player.isXTurn())
                 {
-                    thisButton.setLabel("X");
+                    thisButton.setText("X");
                     playerX.addButton(thisButton);
                     display.setText("Its Player O's turn");
-                    Amoba.determineWinner();
+                    engine.determineWinner();
+                    if(engine.winner!=null)
+                    {
+                        try {
+                        engine.restartGame();
+                        }
+                        catch (InterruptedException f)
+                        {
+                            System.out.println(f.getMessage());
+                        }
+                    }
                     
                 }
                 else
                 {
-                    thisButton.setLabel("O");
+                    thisButton.setText("O");
                     playerO.addButton(thisButton);
                     display.setText("Its Player X's turn");
-                    Amoba.determineWinner();
+                    engine.determineWinner();
+                    if(engine.winner!=null)
+                    {
+                        try {
+                        engine.restartGame();
+                        }
+                        catch (InterruptedException f)
+                        {
+                            System.out.println(f.getMessage());
+                        }
+                    }
                 }
             }
             else return;

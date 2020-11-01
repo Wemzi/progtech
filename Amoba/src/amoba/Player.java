@@ -6,6 +6,7 @@
 package amoba;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 /**
@@ -13,8 +14,25 @@ import java.util.ArrayList;
  * @author lkcsd
  */
 public class Player {
-    private final ArrayList<XOButton> ownButtons = new ArrayList<>();
+    private ArrayList<XOButton> ownButtons;
     private static boolean isXturn = true;
+    private final String name;
+
+   
+    public void prankPlayer()
+    {
+        Random randnumb = new Random();
+        int random = Math.abs(randnumb.nextInt(ownButtons.size()));
+        ownButtons.get(random).setText("");
+        ownButtons.remove(random);
+        
+    }
+    
+    public Player(String name)
+    {
+        ownButtons=new ArrayList<>();
+        this.name = name;
+    }
     
     public ArrayList<XOButton> getownButtons()
     {
@@ -30,6 +48,10 @@ public class Player {
     {
         isXturn = !isXturn;
         return !isXturn;
+    }
+    
+    public String getName() {
+        return name;
     }
     
 }
