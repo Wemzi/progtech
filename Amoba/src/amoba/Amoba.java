@@ -6,7 +6,6 @@
 package amoba;
 
 import java.util.ArrayList;
-import java.util.Random;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,83 +30,100 @@ public class Amoba {
         XareasInARow=0;
         OareasInARow=0;
         ArrayList<XOButton> fieldButtons = window.getButtons();
-        
+        boolean varjmegX=true;
+        boolean varjmegO=true;
         // sor check
+        System.out.println("Sor check");
         for(int idx=it.getCoordX()*(int)Math.sqrt(fieldButtons.size()); idx<it.getCoordX()*(int)Math.sqrt(fieldButtons.size())+(int)Math.sqrt(fieldButtons.size());idx++)
         {  
             if(!(fieldButtons.get(idx).getText().equals("")))
             {
                 if(fieldButtons.get(idx).getText().equals("X"))
                 {
+                    if(OareasInARow==3)
+                    {
+                        varjmegO=false;
+                    }
                     OareasInARow=0;
                     ++XareasInARow;
+                    System.out.println("Oareas: " + OareasInARow + " Xareas:" + XareasInARow);
                     //System.out.println(areasInARow);
                 }
                 else
                 {
-                    
+                    if(XareasInARow==3)
+                    {
+                        varjmegX=false;
+                    }
                     XareasInARow=0;
                     ++OareasInARow;
+                    System.out.println("Oareas: " + OareasInARow + " Xareas:" + XareasInARow);
                     //System.out.println(areasInARow);
                 }
 
             }
             else
             {
-                if(MaXareas<XareasInARow)
-                {
-                    MaXareas = XareasInARow;
-                    System.out.println(MaXareas);
-                }
-                if(MaOareas<OareasInARow)
-                {
-                    MaOareas=OareasInARow;
-                    System.out.println(MaOareas);
-                }
                 XareasInARow=0;
                 OareasInARow=0;
             }
+            
             if(XareasInARow==5)
+            {
+                System.out.println("GG");
+                winner=playerX;                         
+            }
+            else if(OareasInARow==5)
+            {
+                System.out.println("GGO");
+                winner= playerO;
+            }
+            else if(XareasInARow==4 &&!gotPranked &&  !Player.getXTurn() )
+            {
+                playerX.prankPlayer().prankPlayer();
+                
+                gotPranked = true;
+                System.out.println("pranked3");
+            }
+            else if(OareasInARow==4 && !gotPranked && Player.getXTurn()  )
+            {
+                playerO.prankPlayer().prankPlayer();
+               
+                gotPranked = true;
+                System.out.println("pranked4");
+            } 
+            else if(XareasInARow==3 &&!gotPranked &&  !Player.getXTurn() && varjmegX || !varjmegX   )
+            {
+                if(varjmegX)
                 {
-                    System.out.println("GG");
-                    winner=playerX;                        
+                    continue;
                 }
-                else if(OareasInARow==5)
+                playerX.prankPlayer();
+                gotPranked = true;
+                System.out.println("pranked1");
+                varjmegX=true;
+                
+            }
+            else if(OareasInARow==3 &&!gotPranked &&  Player.getXTurn() && varjmegO || !varjmegO )
+            {
+                if(varjmegO)
                 {
-                    System.out.println("GGO");
-                    winner=playerO;
+                    continue;
                 }
-                else if(XareasInARow==4 && !gotPranked && Player.getXTurn() )
-                {
-                    playerX.prankPlayer().prankPlayer();
-                    gotPranked = true;
-                    System.out.println("pranked-3");
-                }
-                else if(OareasInARow==4 && !gotPranked && !Player.getXTurn() )
-                {
-                    playerO.prankPlayer().prankPlayer();
-                    
-                    gotPranked = true;
-                    System.out.println("pranked-4");
-                }
-                else if(XareasInARow==3 &&!gotPranked &&  Player.getXTurn() )
-                {
-                    playerX.prankPlayer();
-                    gotPranked = true;
-                    System.out.println("pranked-1");
-                }
-                else if(OareasInARow==3 &&!gotPranked &&  !Player.getXTurn() )
-                {
-                    playerO.prankPlayer();
-                    gotPranked = true;
-                    System.out.println("pranked-2");
-                }
+                playerO.prankPlayer();
+                gotPranked = true;
+                System.out.println("pranked2");
+                varjmegO=true;
+
+                
+            }
             
         }
-        MaXareas=0; 
-        MaOareas=0;
         
-
+        XareasInARow=0;
+        OareasInARow=0;
+        
+        System.out.println("Oszlop check");
         // oszlop check
             for(int idx=it.getCoordY(); idx<fieldButtons.size();idx+=Math.sqrt(fieldButtons.size()))
             {
@@ -117,11 +133,13 @@ public class Amoba {
                     {
                         OareasInARow=0;
                         ++XareasInARow;
+                        System.out.println("Oareas: " + OareasInARow + " Xareas:" + XareasInARow);
                     }
                     else
                     {
                         XareasInARow=0;
                         ++OareasInARow;
+                        System.out.println("Oareas: " + OareasInARow + " Xareas:" + XareasInARow);
                     }                          
                 }
                 else
@@ -139,35 +157,37 @@ public class Amoba {
                 System.out.println("GGO");
                     winner= playerO;
             }
-            else if(XareasInARow==4 &&!gotPranked &&  Player.getXTurn() )
+            else if(XareasInARow==4 &&!gotPranked &&  !Player.getXTurn() )
             {
                 playerX.prankPlayer().prankPlayer();
                 
                 gotPranked = true;
                 System.out.println("pranked3");
             }
-            else if(OareasInARow==4 && !gotPranked && !Player.getXTurn()  )
+            else if(OareasInARow==4 && !gotPranked && Player.getXTurn()  )
             {
                 playerO.prankPlayer().prankPlayer();
                
                 gotPranked = true;
                 System.out.println("pranked4");
             } 
-            else if(XareasInARow==3 &&!gotPranked &&  Player.getXTurn() )
+            else if(XareasInARow==3 &&!gotPranked &&  !Player.getXTurn() )
             {
                 playerX.prankPlayer();
                 gotPranked = true;
                 System.out.println("pranked1");
             }
-            else if(OareasInARow==3 &&!gotPranked &&  !Player.getXTurn() )
+            else if(OareasInARow==3 &&!gotPranked &&  Player.getXTurn() )
             {
                 playerO.prankPlayer();
                 gotPranked = true;
                 System.out.println("pranked2");
             }
+            }
             
-        }         
-        
+            XareasInARow=0;
+            OareasInARow=0;
+        System.out.println("Jobbátló check");
         //átló check jobbra
         for(int idx=it.getCoordX()>it.getCoordY() ? it.getAtloFirstElem() * (int)Math.sqrt(fieldButtons.size()) : it.getAtloFirstElem(); idx<fieldButtons.size(); idx+=Math.sqrt(fieldButtons.size())+1)
             {
@@ -201,31 +221,31 @@ public class Amoba {
                     System.out.println("GGO");
                     winner=playerO;
                 }
-                else if(XareasInARow==4 && !gotPranked && Player.getXTurn())
+                else if(XareasInARow==4 && !gotPranked && !Player.getXTurn())
                 {
                     playerX.prankPlayer().prankPlayer();
                     gotPranked = true;
                     System.out.println("pranked7");
                 }
-                else if(OareasInARow==4 &&!gotPranked &&  !Player.getXTurn() )
+                else if(OareasInARow==4 &&!gotPranked &&  Player.getXTurn() )
                 {
                     playerO.prankPlayer().prankPlayer();
                     System.out.println("pranked8");
                 } 
-                else if(XareasInARow==3  && !gotPranked && Player.getXTurn()  )
+                else if(XareasInARow==3  && !gotPranked && !Player.getXTurn()  )
                 {
                     playerX.prankPlayer();
                     gotPranked = true;
                     System.out.println("pranked5");
                 }
-                else if(OareasInARow==3  && !gotPranked && !Player.getXTurn() )
+                else if(OareasInARow==3  && !gotPranked && Player.getXTurn() )
                 {
                     playerO.prankPlayer();
                     gotPranked = true;
                     System.out.println("pranked6");
                 }
             }  
-
+            System.out.println("Balátló check");
             //System.out.println( it.getCoordX()>it.getCoordY() ? it.getAtloFirstElem() * (int)Math.sqrt(fieldButtons.size()) : it.getAtloFirstElem()  );
             for(int idx = it.getAtloFirstElem2((int)Math.sqrt(fieldButtons.size())); idx<fieldButtons.size(); idx+=Math.sqrt(fieldButtons.size())-1)
             {
@@ -235,18 +255,19 @@ public class Amoba {
                         {
                             OareasInARow=0;
                             ++XareasInARow;
+                            System.out.println("Oareas: " + OareasInARow + " Xareas:" + XareasInARow);
                         }
                 else
                         {
                             XareasInARow=0;
                             ++OareasInARow;
+                            System.out.println("Oareas: " + OareasInARow + " Xareas:" + XareasInARow);
                         }       
                 }
                 else
                     {
                         XareasInARow=0;
                         OareasInARow=0;
-                        System.out.println("nullazva");
                     }
                 if(XareasInARow==5)
                     {
@@ -258,25 +279,25 @@ public class Amoba {
                         System.out.println("GGO");
                         winner=playerO;
                     } 
-                else if(XareasInARow==4 &&!gotPranked &&  Player.getXTurn())
+                else if(XareasInARow==4 &&!gotPranked &&  !Player.getXTurn())
                 {
                     playerX.prankPlayer().prankPlayer();
                     gotPranked = true;
                     System.out.println("pranked11");
                 }
-                else if(OareasInARow==4 && !gotPranked && !Player.getXTurn() )
+                else if(OareasInARow==4 && !gotPranked && Player.getXTurn() )
                 {
                     playerO.prankPlayer().prankPlayer();
                     gotPranked = true;
                     System.out.println("pranked12");
                 }
-                else if( XareasInARow==3 && !gotPranked && Player.getXTurn())
+                else if( XareasInARow==3 && !gotPranked && !Player.getXTurn())
                 {
                     playerX.prankPlayer();
                     gotPranked = true;
                     System.out.println("pranked9");
                 }
-                else if(OareasInARow==3 && !gotPranked && !Player.getXTurn())
+                else if(OareasInARow==3 && !gotPranked && Player.getXTurn())
                 {
                     playerO.prankPlayer();
                     gotPranked = true;
