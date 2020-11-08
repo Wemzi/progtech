@@ -19,13 +19,13 @@ public class Player {
     private final String name;
 
    
-    public void prankPlayer()
+    public Player prankPlayer()
     {
         Random randnumb = new Random();
         int random = Math.abs(randnumb.nextInt(ownButtons.size()));
         ownButtons.get(random).setText("");
         ownButtons.remove(random);
-        
+        return this;
     }
     
     public Player(String name)
@@ -48,6 +48,11 @@ public class Player {
     {
         isXturn = !isXturn;
         return !isXturn;
+    }
+    
+    public static boolean getXTurn()
+    {
+        return isXturn;
     }
     
     public String getName() {

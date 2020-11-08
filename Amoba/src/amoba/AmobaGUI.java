@@ -109,7 +109,7 @@ public class AmobaGUI {
            {
                for(int jdx=0; jdx<size; jdx++)
                {
-                    XOButton tmp = new XOButton(idx, jdx);
+                    XOButton tmp = new XOButton(idx, jdx,Buttons.size());
                     tmp.setFont(defaultFontType);
                     tmp.addActionListener(new XOActionListener(tmp));
                     tmp.setSize(1000, 1000);
@@ -144,7 +144,7 @@ public class AmobaGUI {
                     thisButton.setText("X");
                     playerX.addButton(thisButton);
                     display.setText("Its Player O's turn");
-                    engine.determineWinner();
+                    engine.determineWinner(thisButton);
                     if(engine.winner!=null)
                     {
                         try {
@@ -162,7 +162,7 @@ public class AmobaGUI {
                     thisButton.setText("O");
                     playerO.addButton(thisButton);
                     display.setText("Its Player X's turn");
-                    engine.determineWinner();
+                    engine.determineWinner(thisButton);
                     if(engine.winner!=null)
                     {
                         try {
@@ -175,7 +175,7 @@ public class AmobaGUI {
                     }
                 }
             }
-            else return;
+            
         }
     
         public XOActionListener(XOButton Button)
