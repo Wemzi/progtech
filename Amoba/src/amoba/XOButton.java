@@ -15,7 +15,7 @@ public class XOButton extends JButton {
     private final int coordX;
     private final int coordY;
     
-    
+    /** konstruktor, melyben eltároljuk a koordinátákat. */
     XOButton(int coordX, int coordY)
     {
         super();

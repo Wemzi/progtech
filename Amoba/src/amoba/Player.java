@@ -17,8 +17,12 @@ public class Player {
     private ArrayList<XOButton> ownButtons;
     private static boolean isXturn = true;
     private final String name;
+    private boolean pranked3=false;
+    private boolean pranked4=false;
 
-   
+   /**a játékos megszivatásáért felelős metódus, 
+    * a játékos gombjai közül (gyűjtemény) választ véletlenszerűen egyet amit kidob a gyűjteményből,
+    * és ennek megfelelően a gomb szövegét („X”, vagy „O”) is „”-ra változtatja. */
     public void prankPlayer()
     {
         Random randnumb = new Random();
@@ -26,6 +30,26 @@ public class Player {
         ownButtons.get(random).setText("");
         ownButtons.remove(random);
         
+    }
+    
+    public boolean getPranked3()
+    {
+        return pranked3;
+    }
+    
+    public boolean getPranked4()
+    {
+        return pranked4;
+    }
+    
+    public void gotPrankedfor3()
+    {
+        pranked3=true;
+    }
+    
+    public void gotPrankedfor4()
+    {
+        pranked4=true;
     }
     
     public Player(String name)
@@ -48,6 +72,11 @@ public class Player {
     {
         isXturn = !isXturn;
         return !isXturn;
+    }
+    
+    public static boolean getXTurn()
+    {
+        return isXturn;
     }
     
     public String getName() {

@@ -6,7 +6,6 @@
 package amoba;
 
 import java.util.ArrayList;
-import java.util.Random;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,7 +20,8 @@ public class Amoba {
     private Player playerO = window.getPlayerO();
     public Player winner = null;
     
-    
+    /** Az amőba játékunk nyerés-eldöntő metódusa, melyben 4 ciklus során megszámoljuk az X -ek és O-k számát, 
+     * majd ennek megfelelően szivatjuk a játékost, illetve ha elérte az 5-öt, akkor automatikusan nyert. */
     public void determineWinner()
     {
         boolean gotPranked = false;
@@ -54,39 +54,43 @@ public class Amoba {
                 }
                 if(XareasInARow==5)
                 {
-                        System.out.println("GG");
+                        //System.out.println("GG");
                         winner=playerX;                        
                 }
                 else if(OareasInARow==5)
                 {
-                    System.out.println("GGO");
+                   // System.out.println("GGO");
                         winner=playerO;
                 }
-                else if(XareasInARow==3 && !gotPranked )
+                else if(XareasInARow==3 && !gotPranked && !Player.getXTurn() && !playerX.getPranked3())
                 {
                     playerX.prankPlayer();
+                    playerX.gotPrankedfor3();
                     gotPranked = true;
-                    System.out.println("pranked-1");
+                  //  System.out.println("pranked-1");
                 }
-                else if(OareasInARow==3 && !gotPranked )
+                else if(OareasInARow==3 && !gotPranked && Player.getXTurn() && !playerO.getPranked3() )
                 {
                     playerO.prankPlayer();
+                    playerO.gotPrankedfor3();
                     gotPranked = true;
-                    System.out.println("pranked-2");
+                   // System.out.println("pranked-2");
                 }
-                else if(XareasInARow==4 && !gotPranked )
+                else if(XareasInARow==4 && !gotPranked && !Player.getXTurn() && !playerX.getPranked4())
                 {
                     playerX.prankPlayer();
                     playerX.prankPlayer();
+                    playerX.gotPrankedfor4();
                     gotPranked = true;
-                    System.out.println("pranked-3");
+                    //System.out.println("pranked-3");
                 }
-                else if(OareasInARow==4 && !gotPranked )
-                {
+                else if(OareasInARow==4 && !gotPranked && Player.getXTurn() && !playerO.getPranked4())
+                { 
                     playerO.prankPlayer();
                     playerO.prankPlayer();
+                    playerO.gotPrankedfor4();
                     gotPranked = true;
-                    System.out.println("pranked-4");
+                   // System.out.println("pranked-4");
                 }
             }
             else
@@ -127,39 +131,43 @@ public class Amoba {
                     }
             if(XareasInARow==5)
             {
-                System.out.println("GG");
+               // System.out.println("GG");
                 winner=playerX;                         
             }
             else if(OareasInARow==5)
             {
-                System.out.println("GGO");
+                //System.out.println("GGO");
                     winner= playerO;
             }
-            else if(XareasInARow==3 && !gotPranked )
+            else if(XareasInARow==3 && !gotPranked && !Player.getXTurn() && !playerX.getPranked3() )
             {
                 playerX.prankPlayer();
                 gotPranked = true;
-                System.out.println("pranked1");
+                playerX.gotPrankedfor3();
+                //System.out.println("pranked1");
             }
-            else if(OareasInARow==3 && !gotPranked )
+            else if(OareasInARow==3 && !gotPranked && Player.getXTurn() && !playerO.getPranked3() )
             {
                 playerO.prankPlayer();
+                playerO.gotPrankedfor3();
                 gotPranked = true;
-                System.out.println("pranked2");
+                //System.out.println("pranked2");
             }
-            else if(XareasInARow==4 && !gotPranked )
+            else if(XareasInARow==4 && !gotPranked && !Player.getXTurn() && !playerX.getPranked4())
             {
                 playerX.prankPlayer();
                 playerX.prankPlayer();
+                playerX.gotPrankedfor4();
                 gotPranked = true;
-                System.out.println("pranked3");
+                //System.out.println("pranked3");
             }
-            else if(OareasInARow==4 && !gotPranked )
+            else if(OareasInARow==4 && !gotPranked && Player.getXTurn() && !playerO.getPranked4() )
             {
                 playerO.prankPlayer();
                 playerO.prankPlayer();
+                playerO.gotPrankedfor4();
                 gotPranked = true;
-                System.out.println("pranked4");
+                //System.out.println("pranked4");
             } 
             }
                      
@@ -195,39 +203,43 @@ public class Amoba {
                 }
                 if(XareasInARow==5)
                 {
-                    System.out.println("GG");
+                    //System.out.println("GG");
                     winner=playerX;                         
                 }
                 else if(OareasInARow==5)
                 {
-                    System.out.println("GGO");
+                    //System.out.println("GGO");
                     winner=playerO;
                 }    
-            if(XareasInARow==3 && !gotPranked )
+            if(XareasInARow==3 && !gotPranked && !Player.getXTurn() && !playerX.getPranked3())
             {
                 playerX.prankPlayer();
                 gotPranked = true;
-                System.out.println("pranked5");
+                playerX.gotPrankedfor3();
+                //System.out.println("pranked5");
             }
-            else if(OareasInARow==3 && !gotPranked )
+            else if(OareasInARow==3 && !gotPranked && Player.getXTurn() && !playerO.getPranked3() )
             {
                 playerO.prankPlayer();
                 gotPranked = true;
-                System.out.println("pranked6");
+                playerO.gotPrankedfor3();
+                //System.out.println("pranked6");
             }
-            else if(XareasInARow==4 && !gotPranked )
+            else if(XareasInARow==4 && !gotPranked && !Player.getXTurn() && !playerX.getPranked4() )
             {
                 playerX.prankPlayer();
                 playerX.prankPlayer();
+                playerX.gotPrankedfor4();
                 gotPranked = true;
-                System.out.println("pranked7");
+                //System.out.println("pranked7");
             }
-            else if(OareasInARow==4 && !gotPranked )
+            else if(OareasInARow==4 && !gotPranked && Player.getXTurn() && !playerO.getPranked4())
             {
                 playerO.prankPlayer();
                 playerO.prankPlayer();
+                playerO.gotPrankedfor4();
                 gotPranked = true;
-                System.out.println("pranked8");
+                //System.out.println("pranked8");
             } 
             }
             
@@ -259,39 +271,43 @@ public class Amoba {
                     }
                 if(XareasInARow==5)
                     {
-                        System.out.println("GG");
+                        //System.out.println("GG");
                         winner=playerX;                         
                     }
                 else if(OareasInARow==5)
                     {
-                        System.out.println("GGO");
+                        //System.out.println("GGO");
                         winner=playerO;
                     }    
-                if(XareasInARow==3 && !gotPranked )
+                if(XareasInARow==3 && !gotPranked && !Player.getXTurn() && !playerX.getPranked3() )
                 {
                     playerX.prankPlayer();
                     gotPranked = true;
-                    System.out.println("pranked9");
+                    playerX.gotPrankedfor3();
+                    //System.out.println("pranked9");
                 }
-                else if(OareasInARow==3 && !gotPranked )
+                else if(OareasInARow==3 && !gotPranked && Player.getXTurn() && !playerO.getPranked3() )
                 {
                     playerO.prankPlayer();
                     gotPranked = true;
-                    System.out.println("pranked10");
+                    playerO.gotPrankedfor3();
+                    //System.out.println("pranked10");
                 }
-                else if(XareasInARow==4 && !gotPranked )
+                else if(XareasInARow==4 && !gotPranked && !Player.getXTurn() && !playerX.getPranked4() )
                 {
                     playerX.prankPlayer();
                     playerX.prankPlayer();
+                    playerX.gotPrankedfor4();
                     gotPranked = true;
-                    System.out.println("pranked11");
+                    //System.out.println("pranked11");
                 }
-                else if(OareasInARow==4 && !gotPranked )
+                else if(OareasInARow==4 && !gotPranked && Player.getXTurn() && !playerO.getPranked4() )
                 {
                     playerO.prankPlayer();
                     playerO.prankPlayer();
+                    playerO.gotPrankedfor4();
                     gotPranked = true;
-                    System.out.println("pranked12");
+                    //System.out.println("pranked12");
                 }
             }
            
@@ -299,6 +315,10 @@ public class Amoba {
             return;
         }
     
+        /** Megvizsgálja a metódus elején, hogy  a gombbal kértünk új játékot,
+         *  vagy az előzőnek ténylegesen vége lett, és ha végig lett játszva a játék, 
+         * akkor kiírja egy párbeszédablakban a nyertes nevét, 
+         * majd rövid idő után bezárja az éppen nyitva lévő ablakot, és az új játékot egy új ablakban megnyitva kezdi el.   */
     public void restartGame() throws InterruptedException
         {
             if(winner!=null)
