@@ -11,10 +11,10 @@ class LabyrinthBuilder
 
     public LabyrinthBuilder()
     {
-        for (int idx = 0; idx < 10 ; idx++)
+        for (int idx = 0; idx < 9 ; idx++)
         {
             ArrayList <Cell> tmp = new ArrayList<Cell>();
-            for ( int jdx=0; jdx<10; jdx++)
+            for ( int jdx=0; jdx<9; jdx++)
             {
                 tmp.add(new Cell(idx,jdx));
             }
@@ -40,6 +40,10 @@ class LabyrinthBuilder
                 currentCell.setedgeRight();
                 cells.get(currentCell.getcolIdx()).get(currentCell.getrowIdx()+1).setedgeLeft();
                 System.out.println("jobbra");
+                currentCell = cells.get(currentCell.getcolIdx()).get(currentCell.getrowIdx()+1);
+                currentCell.setedgeLeft();
+                currentCell.sethasBeenSelected();
+                return;
             }
             currentCell = cells.get(currentCell.getcolIdx()).get(currentCell.getrowIdx()+1);
         }
@@ -49,7 +53,10 @@ class LabyrinthBuilder
             {
                 System.out.println("fel");
                 currentCell.setedgeUp();
-                cells.get(currentCell.getcolIdx()+1).get(currentCell.getrowIdx()).setedgeDown();
+                currentCell = cells.get(currentCell.getcolIdx()+1).get(currentCell.getrowIdx());
+                currentCell.setedgeDown();
+                currentCell.sethasBeenSelected();
+                return;
             }
             currentCell = cells.get(currentCell.getcolIdx()+1).get(currentCell.getrowIdx());
         }
@@ -59,7 +66,10 @@ class LabyrinthBuilder
             {
                 System.out.println("balra");
                 currentCell.setedgeLeft();
-                cells.get(currentCell.getcolIdx()).get(currentCell.getrowIdx()-1).setedgeRight();
+                currentCell = cells.get(currentCell.getcolIdx()).get(currentCell.getrowIdx()-1);
+                currentCell.setedgeRight();
+                currentCell.sethasBeenSelected();
+                return;
             }
             currentCell = cells.get(currentCell.getcolIdx()).get(currentCell.getrowIdx()-1);
         }
@@ -69,7 +79,10 @@ class LabyrinthBuilder
             {
                 System.out.println("le");
                 currentCell.setedgeDown();
-                cells.get(currentCell.getcolIdx()-1).get(currentCell.getrowIdx()).setedgeUp();
+                currentCell = cells.get(currentCell.getcolIdx()-1).get(currentCell.getrowIdx());
+                currentCell.setedgeUp();
+                currentCell.sethasBeenSelected();
+                return;
             }
             currentCell = cells.get(currentCell.getcolIdx()-1).get(currentCell.getrowIdx());
         }

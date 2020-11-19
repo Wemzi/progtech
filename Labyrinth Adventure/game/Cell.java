@@ -21,7 +21,12 @@ public class Cell {
 
     public Image selectImage() throws IOException
     {
-        if(edgeRight && edgeLeft && edgeDown )
+        if(edgeRight && edgeLeft && edgeDown && edgeUp)
+        {
+            Image i = ResourceLoader.loadImage("assets/brick.png");
+            return i;
+        }
+        else if(edgeRight && edgeLeft && edgeDown )
         {
             Image i = ResourceLoader.loadImage("assets/edgelrd.png");
             return i;
@@ -94,6 +99,91 @@ public class Cell {
         else
         {
             Image i = ResourceLoader.loadImage("assets/grass.png");
+            return i;
+        }
+    }
+
+
+    public Image selectPlayerImage() throws IOException
+    {
+        if(edgeRight && edgeLeft && edgeDown && edgeUp)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/brick.png");
+            return i;
+        }
+        else if(edgeRight && edgeLeft && edgeDown )
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edgelrd.png");
+            return i;
+        }
+        else if(edgeRight && edgeLeft && edgeUp)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edgeurl.png");
+            return i;
+        }
+        else if(edgeRight && edgeDown && edgeUp)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edgeurd.png");
+            return i;
+        }
+        else if(edgeLeft && edgeDown && edgeUp)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edgelud.png");
+            return i;
+        }
+        else if(edgeLeft && edgeDown)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edgeld.png");
+            return i;
+        }
+        else if(edgeLeft && edgeUp)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edgeul.png");
+            return i;
+        }
+        else if(edgeLeft && edgeRight)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edgelr.png");
+            return i;
+        }
+        else if(edgeRight && edgeUp)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edgeur.png");
+            return i;
+        }
+        else if(edgeRight && edgeDown)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edgerd.png");
+            return i;
+        }
+        else if(edgeUp && edgeDown)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edgeud.png");
+            return i;
+        }
+        else if(edgeDown)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edged.png");
+            return i;
+        }
+        else if(edgeUp)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edgeu.png");
+            return i;
+        }
+        else if(edgeLeft)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edgel.png");
+            return i;
+        }
+        else if(edgeRight)
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/edger.png");
+            return i;
+        }
+        else
+        {
+            Image i = ResourceLoader.loadImage("assets/textureswithplayer/grass.png");
             return i;
         }
     }
