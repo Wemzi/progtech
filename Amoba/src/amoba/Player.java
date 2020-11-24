@@ -20,16 +20,21 @@ public class Player {
     private boolean pranked3=false;
     private boolean pranked4=false;
 
+<<<<<<< HEAD
    /**a játékos megszivatásáért felelős metódus, 
     * a játékos gombjai közül (gyűjtemény) választ véletlenszerűen egyet amit kidob a gyűjteményből,
     * és ennek megfelelően a gomb szövegét („X”, vagy „O”) is „”-ra változtatja. */
     public void prankPlayer()
+=======
+   
+    public Player prankPlayer()
+>>>>>>> 0db88027f7257daf3bb3091d8ffe000def999f7b
     {
         Random randnumb = new Random();
         int random = Math.abs(randnumb.nextInt(ownButtons.size()));
         ownButtons.get(random).setText("");
         ownButtons.remove(random);
-        
+        return this;
     }
     
     public boolean getPranked3()
