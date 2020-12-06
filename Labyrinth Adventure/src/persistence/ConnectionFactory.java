@@ -26,7 +26,7 @@ public class ConnectionFactory {
             Class.forName("com.mysql.cj.jdbc.Driver");
             
             conn = DriverManager.getConnection("jdbc:mysql://localhost/labyrinthadventure?" +    
-                    "serverTimezone=UTC&user=root&password=barby990113");
+                    "serverTimezone=UTC&user=root&password=xd");
         }
         catch (Exception e){
             System.out.println("" + e);
